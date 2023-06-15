@@ -1,12 +1,12 @@
-import Logo from "../Components/Logo";
+import {Logo} from '../Components/index'
 import main from "../assets/images/main.svg";
-import Wrapper from '../assets/wrappers/Testing'
+import Wrapper from "../assets/wrappers/Testing";
 
 export default function Landing() {
   return (
     <Wrapper>
       <nav>
-       <Logo/>
+        <Logo/>
       </nav>
       <div className="container page">
         <div>
@@ -21,12 +21,10 @@ export default function Landing() {
             nihil, debitis quisquam libero delectus sint distinctio nam modi
             deleniti ea officiis quis.
           </p>
-          <button className="btn btn-hero">Login/Register</button>
+          <button className="btn btn-hero" >Login/Register</button>
         </div>
         <img src={main} alt="Job Hunt" className="img main-img" />
       </div>
     </Wrapper>
   );
 }
-
-
