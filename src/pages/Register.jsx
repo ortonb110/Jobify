@@ -1,18 +1,24 @@
 import { useState, useEffect } from "react";
-import { Logo } from "../Components/index";
+import { Logo, FormRow, Alert } from "../Components/index";
 import Wrapper from "../assets/wrappers/RegisterPage";
-import FormRow from "../Components/FormRow";
+
 
 const initialState = {
   name: "",
   email: "",
   password: "",
   isMember: true,
+  showAlert: false,
 };
 
 const Register = () => {
   const [values, setValues] = useState(initialState)
   //Global state and useNavigate
+
+
+  const toggleMember = () => {
+    setValues({...values, isMember:!values.isMember})
+  }
 
   const handleChange = (e) => {
     console.log(e.target);
@@ -27,15 +33,26 @@ const Register = () => {
     <Wrapper className="full-page">
         <form className="form" onSubmit={onSubmit}>
             <Logo/>
-            <h3>Login</h3>
+            <h3>{values.isMember? 'Login': 'Register'}</h3>
+            {/* Alert Component goes here */}
+            {
+              values.showAlert && <Alert/>
+            }
             {/* Name field */}
-            <div className="form-row">
-                <label htmlFor="name" className="form-label">Name</label>
-                <input type="text" name="name" id="name" className="form-input"  value={values.name} onChange={handleChange}/>
-            </div>
+            {
+              !values.isMember && (<FormRow type={'text'} name={'name'} value={values.name} handleChange={handleChange}/>)
+            }
+            {/* Email field */}
             <FormRow type={'email'} name={'email'} value={values.email} handleChange={handleChange}/>
+            {/* Password field */}
             <FormRow type={'password'} name={'password'} value={values.password} handleChange={handleChange}/>
             <button className="btn btn-block" type="submit">submit</button> 
+            <p>
+              {values.isMember? 'Not a member yet?': 'Already a member?'}
+              <button type="button" onClick={toggleMember} className="member-btn">{
+                values.isMember? 'Register': 'Login'
+              }</button>
+            </p>
         </form>
     </Wrapper>
   );
