@@ -14,24 +14,31 @@ const Register = () => {
   const [values, setValues] = useState(initialState);
   //Global state and useNavigate
 
-  const { isLoading, showAlert, displayAlert } = useAppContext();
+  const { isLoading, showAlert, displayAlert, registerUser } = useAppContext();
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
   };
 
   const handleChange = (e) => {
-    setValues({...values, [e.target.name]:e.target.value})
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const {name, email, password, isMember} = values;
-    if(!name || !password || !email || (!isMember && !name)) {
-      displayAlert();
-      return
-    }
+    const { name, email, password, isMember } = values;
     
+    if (!name || !password || !email || (!isMember && !name)) {
+      displayAlert();
+      return;
+    }
+    const currentUser = { name, email, password };
+    
+    if (isMember) {
+      console.log("Already a member");
+    } else {
+      registerUser(currentUser);
+    }
   };
 
   return (
@@ -43,28 +50,17 @@ const Register = () => {
         {showAlert && <Alert />}
         {/* Name field */}
         {!values.isMember && (
-          <FormRow
-            type={"text"}
-            name={"name"}
-            value={values.name}
-            handleChange={handleChange}
-          />
+          <FormRow type={"text"} name={"name"} handleChange={handleChange}  value={values.name} />
         )}
         {/* Email field */}
-        <FormRow
-          type={"email"}
-          name={"email"}
-          value={values.email}
-          handleChange={handleChange}
-        />
+        <FormRow type={"email"} name={"email"} handleChange={handleChange}  value={values.email} />
         {/* Password field */}
         <FormRow
           type={"password"}
           name={"password"}
-          value={values.password}
-          handleChange={handleChange}
+          handleChange={handleChange}  value={values.password}
         />
-        <button className="btn btn-block" type="submit">
+        <button className="btn btn-block" type="submit" disabled={isLoading}>
           submit
         </button>
         <p>

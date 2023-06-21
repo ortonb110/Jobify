@@ -3,6 +3,7 @@ const FormRow = ({ type, name, value, handleChange, labelText }) => {
     <div className="form-row">
       <label htmlFor={name}>{labelText || name}</label>
       <input
+      name={name}
         type={type}
         value={value}
         onChange={handleChange}
