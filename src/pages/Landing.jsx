@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {Logo} from '../Components/index'
 import main from "../assets/images/main.svg";
 import Wrapper from "../assets/wrappers/Testing";
@@ -21,7 +22,7 @@ export default function Landing() {
             nihil, debitis quisquam libero delectus sint distinctio nam modi
             deleniti ea officiis quis.
           </p>
-          <button className="btn btn-hero" >Login/Register</button>
+          <Link to={'/register'} className='btn btn-hero'>Register/Login</Link>
         </div>
         <img src={main} alt="Job Hunt" className="img main-img" />
       </div>
