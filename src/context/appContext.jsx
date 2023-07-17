@@ -11,7 +11,8 @@ import {
   LOGIN_USER_BEGIN,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
-  TOGGLE_SIDEBAR
+  TOGGLE_SIDEBAR,
+  LOGOUT_USER
 } from "./action";
 
 const token = localStorage.getItem("token");
@@ -50,7 +51,7 @@ const AppProvider = ({ children }) => {
     localStorage.setItem('token', token)
     localStorage.setItem('location', location)
   };
-  const removeUserToLocalStorage = ({ user, token, location }) => {
+  const removeUserToLocalStorage = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("location");
@@ -109,8 +110,13 @@ const AppProvider = ({ children }) => {
     dispatch({type: TOGGLE_SIDEBAR})
   }
 
+  const logoutUser = () => {
+    dispatch({type: LOGOUT_USER})
+    removeUserToLocalStorage();
+  }
+
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser, toggleSidebar }}>
+    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser, toggleSidebar, logoutUser }}>
       {children}
     </AppContext.Provider>
   );
