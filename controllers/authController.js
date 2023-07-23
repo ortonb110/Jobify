@@ -50,12 +50,11 @@ const updateUser = async (req, res) => {
     throw new BadRequestError('Please provide all values'); 
   } 
   const user = await User.findOne({_id:req.user.userId});
-  console.log(user);
   user.email = email;
   user.name = name;
   user.lastName = lastName;
   user.location = location;
-  await user.save;
+  await user.save();
   const token = user.createJWT()
   res
     .status(StatusCodes.OK)
