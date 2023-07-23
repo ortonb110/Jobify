@@ -32,7 +32,7 @@ const JobsSchema = new mongoose.Schema({
     default: 'my city'
   },
   createdBy: {
-    type: mongoose.type.ObjectId,
+    type: mongoose.Types.ObjectId,
     required: [true, 'Please provide user'],
     ref: 'User',
   },
