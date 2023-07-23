@@ -13,10 +13,10 @@ const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if(!email || !name || !location || !lastName) {
-    //     displayAlert("Please provide all values");
-    //     return;
-    // }
+    if(!email || !name || !location || !lastName) {
+        displayAlert("Please provide all values");
+        return;
+    }
     updateUser({email, name, lastName, location});
   };
 
