@@ -1,4 +1,4 @@
-import { FormRow, Alert } from "../../Components/index";
+import { FormRow, Alert, FormRowSelect } from "../../Components/index";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import { useAppContext } from "../../context/appContext";
 
@@ -14,22 +14,24 @@ const AddJob = () => {
     status,
     statusOptions,
     isEditing,
+    handleChange,
+    clearValues
   } = useAppContext();
 
-  const handleSubmit = (e)=> {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if(!position || !company || !jobLocation) {
+    if (!position || !company || !jobLocation) {
       displayAlert();
-      return
+      return;
     }
 
-    console.log('Job created')
-  }
+    console.log("Job created");
+  };
 
-  const handleChange = (e) => {
+  const handleJobInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    console.log(name, value);
+    handleChange({name, value})
   };
   return (
     <Wrapper>
@@ -42,14 +44,14 @@ const AddJob = () => {
             type={"text"}
             name="position"
             value={position}
-            handleChange={handleChange}
+            handleChange={handleJobInput}
           />
           {/* Company */}
           <FormRow
             type={"text"}
             name="company"
             value={company}
-            handleChange={handleChange}
+            handleChange={handleJobInput}
           />
           {/* Location */}
           <FormRow
@@ -57,13 +59,42 @@ const AddJob = () => {
             name="jobLocation"
             labelText={"job location"}
             value={jobLocation}
-            handleChange={handleChange}
+            handleChange={handleJobInput}
+          />
+          {/* Job Status */}
+          <FormRowSelect
+            name={"status"}
+            value={status}
+            
+            list={statusOptions}
           />
           {/* Job Type */}
-          {/* Job Status */}
+          <FormRowSelect
+            name={"jobType"}
+            labelText={"job type"}
+            value={jobType}
+            
+            list={jobTypeOptions}
+          />
+
+          {/* Btn Container */}
           <div className="btn-container">
-            <button type="submit" className="btn btn-block submit-btn" onClick={handleSubmit}>
+            <button
+              type="submit"
+              className="btn btn-block submit-btn"
+              onClick={handleSubmit}
+            >
               submit
+            </button>
+            <button
+              type="button"
+              className="btn btn-block clear-btn"
+              onClick={(e)=> {
+                e.preventDefault()
+                clearValues()
+              }}
+            >
+              Clear
             </button>
           </div>
         </div>

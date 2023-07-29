@@ -11,7 +11,9 @@ import {
   LOGOUT_USER,
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
-  UPDATE_USER_ERROR
+  UPDATE_USER_ERROR,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -93,26 +95,26 @@ const reducer = (state, action) => {
     };
   }
 
-  if(action.type === TOGGLE_SIDEBAR) {
+  if (action.type === TOGGLE_SIDEBAR) {
     return {
-      ...state, showSidebar: !state.showSidebar
-    }
+      ...state,
+      showSidebar: !state.showSidebar,
+    };
   }
   if (action.type === LOGOUT_USER) {
     return {
       ...initialState,
       user: null,
       token: null,
-      userLocation:null,
+      userLocation: null,
       jobLocation: null,
-      
     };
   }
 
   if (action.type === UPDATE_USER_BEGIN) {
     return {
       ...state,
-      isLoading: true
+      isLoading: true,
     };
   }
   if (action.type === UPDATE_USER_SUCCESS) {
@@ -135,6 +137,24 @@ const reducer = (state, action) => {
       showAlert: true,
       alertText: action.payload.msg,
       alertType: "danger",
+    };
+  }
+  if (action.type === HANDLE_CHANGE) {
+    return {
+      ...state,
+      [action.payload.name]: action.payload.value,
+    };
+  }
+  if (action.type === CLEAR_VALUES) {
+    const initialState = {
+      isEditing: false,
+      editJobId: "",
+      position: "",
+      company: "",
+      jobLocation: state.userLocation || "",
+    };
+    return {
+      ...state, ...initialState
     };
   }
 
