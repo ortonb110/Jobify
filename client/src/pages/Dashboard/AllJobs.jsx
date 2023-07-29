@@ -1,8 +1,12 @@
-import React from 'react'
+import {JobsContainer, SearchContainer} from '../../Components/index'
+import { Fragment } from 'react'
 
 const AllJobs = () => {
   return (
-    <div>AllJobs</div>
+    <Fragment>
+      <SearchContainer/>
+      <JobsContainer/>
+    </Fragment>
   )
 }
 
