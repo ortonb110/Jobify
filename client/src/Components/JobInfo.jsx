@@ -1,8 +1,12 @@
-import React from 'react'
+import Wrapper from "../assets/wrappers/JobInfo"
 
-const JobInfo = () => {
+
+const JobInfo = ({icon, text}) => {
   return (
-    <div>JobInfo</div>
+    <Wrapper>
+        <span className="icon">{icon}</span>
+        <span className="text">{text}</span>
+    </Wrapper>
   )
 }
 
