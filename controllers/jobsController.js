@@ -21,6 +21,7 @@ const getAllJobs = async (req, res) => {
     .status(StatusCodes.OK)
     .json({ jobs, totalJobs: jobs.length, numOfPages: 1 });
 };
+
 const updateJob = async (req, res) => {
   res.send("update job");
 };
