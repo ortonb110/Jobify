@@ -20,6 +20,7 @@ import {
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
   GET_JOBS_ERROR,
+  SET_EDIT_JOB
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -205,6 +206,20 @@ const reducer = (state, action) => {
       totalJobs: action.payload.totalJobs,
       numOfPages: action.payload.numOfPages,
 
+    }
+  }
+  if(action.type === SET_EDIT_JOB) {
+    const job = state.jobs.find((job)=> job._id === action.payload.id)
+    const {position, _id, company, jobLocation, jobType, status} = job
+    return {
+      ...state,
+      isEditing: true,
+      editJobId: _id,
+      position,
+      company, 
+      jobLocation, 
+      status,
+      jobType
     }
   }
 
