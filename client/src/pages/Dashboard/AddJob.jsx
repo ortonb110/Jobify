@@ -17,7 +17,8 @@ const AddJob = () => {
     handleChange,
     clearValues, 
     isLoading,
-    createJob
+    createJob,
+    editJob
   } = useAppContext();
 
   const handleSubmit = (e) => {
@@ -28,6 +29,7 @@ const AddJob = () => {
     }
     
     if(isEditing) {
+      editJob();
       return
     }
 
@@ -72,7 +74,7 @@ const AddJob = () => {
           <FormRowSelect
             name={"status"}
             value={status}
-            
+            handleChange={handleJobInput}
             list={statusOptions}
           />
           {/* Job Type */}
@@ -80,7 +82,7 @@ const AddJob = () => {
             name={"jobType"}
             labelText={"job type"}
             value={jobType}
-            
+            handleChange={handleJobInput}
             list={jobTypeOptions}
           />
 
