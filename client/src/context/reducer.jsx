@@ -19,7 +19,7 @@ import {
   CREATE_JOB_ERROR,
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
-  GET_JOBS_ERROR,
+  DELETE_JOB_BEGIN,
   SET_EDIT_JOB
 } from "./action";
 import { initialState } from "./appContext";
@@ -220,6 +220,13 @@ const reducer = (state, action) => {
       jobLocation, 
       status,
       jobType
+    }
+  }
+
+  if(action.type === DELETE_JOB_BEGIN) {
+    return {
+      ...state, 
+      isLoading: true
     }
   }
 
