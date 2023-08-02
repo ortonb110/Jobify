@@ -13,9 +13,7 @@ const createJob = async (req, res) => {
   const job = await Job.create(req.body);
   res.status(StatusCodes.CREATED).json({ job });
 };
-const deleteJob = async (req, res) => {
-  res.send("delete job");
-};
+
 const getAllJobs = async (req, res) => {
   const jobs = await Job.find({ createdBy: req.user.userId });
   res
@@ -45,8 +43,22 @@ const updateJob = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ updateJob });
 };
+
 const showStats = async (req, res) => {
   res.send("show stats");
+};
+
+const deleteJob = async (req, res) => {
+  const { id: jobId } = req.params;
+
+
+  const job = await Job.findOne({_id: jobId})
+
+  checkPermissions(req.user, job.createdBy);
+
+  await Job.findByIdAndRemove({_id: jobId});
+  
+  res.status(StatusCodes.OK).json({ msg: "Success: Deleted Job" });
 };
 
 export { createJob, deleteJob, getAllJobs, updateJob, showStats };
