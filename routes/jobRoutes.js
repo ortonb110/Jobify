@@ -6,6 +6,7 @@ import {
   updateJob,
   showStats,
   getAllJobs,
+  
 } from "../controllers/jobsController.js";
 
 router.route("/").post(createJob).get(getAllJobs);
