@@ -51,19 +51,31 @@ const showStats = async (req, res) => {
     { $group: { _id: "$status", count: { $sum: 1 } } },
   ]);
 
-  stats = stats.reduce((acc, curr)=> {
-    const {_id: title, count} = curr;
+  stats = stats.reduce((acc, curr) => {
+    const { _id: title, count } = curr;
     acc[title] = count;
-    return acc
-  }, {})
+    return acc;
+  }, {});
 
   let defaultStats = {
     pending: stats.pending || 0,
-    interview: stats.interview ||0,
-    declined: stats.declined || 0
-  }
+    interview: stats.interview || 0,
+    declined: stats.declined || 0,
+  };
 
-  let monthlyApplications = []
+  let monthlyApplications = await Job.aggregate([
+    { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
+    {
+      $group: {
+        _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { "_id.year": -1, "_id.month": -1 },
+    },
+    { $limit: 6 },
+  ]);
   res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
 };
 
