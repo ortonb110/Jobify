@@ -3,6 +3,7 @@ import { BadRequestError, NotFoundError } from "../Errors/index.js";
 import Job from "../models/Job.js";
 import checkPermissions from "../Utils/checkPermissions.js";
 import mongoose from "mongoose";
+import moment from 'moment';
 
 const createJob = async (req, res) => {
   const { company, position } = req.body;
@@ -76,6 +77,14 @@ const showStats = async (req, res) => {
     },
     { $limit: 6 },
   ]);
+
+
+  monthlyApplications = monthlyApplications.map((item)=> {
+    const {_id:{month, year}, count} = item;
+    const date =moment().month(month-1).year(year).format('MMM Y');
+    return {date, count};
+  }).reverse()
+
   res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
 };
 
