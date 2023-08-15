@@ -29,7 +29,8 @@ import {
   EDIT_JOB_SUCCESS,
   EDIT_JOB_ERROR,
   SHOW_STATS_BEGIN,
-  SHOW_STATS_SUCCESS
+  SHOW_STATS_SUCCESS,
+  CLEAR_FILTERS,
 } from "./action";
 
 const token = localStorage.getItem("token");
@@ -59,11 +60,11 @@ const initialState = {
   page: 1,
   stats: {},
   monthlyApplications: [],
-  search: '',
-  searchStatus: 'all',
-  searchType: 'all',
-  sort: 'latest',
-  sortOptions: ['latest', 'oldest', 'a-z', 'z-a']
+  search: "",
+  searchStatus: "all",
+  searchType: "all",
+  sort: "latest",
+  sortOptions: ["latest", "oldest", "a-z", "z-a"],
 };
 
 const AppContext = React.createContext();
@@ -286,23 +287,26 @@ const AppProvider = ({ children }) => {
   };
 
   const showStats = async () => {
-    dispatch({type: SHOW_STATS_BEGIN})
+    dispatch({ type: SHOW_STATS_BEGIN });
     try {
-      const {data} = await authFetch('/jobs/stats');
-      dispatch({type: SHOW_STATS_SUCCESS, payload: {
-        stats:data.defaultStats,
-        monthlyApplications: data.monthlyApplications
-      }})
+      const { data } = await authFetch("/jobs/stats");
+      dispatch({
+        type: SHOW_STATS_SUCCESS,
+        payload: {
+          stats: data.defaultStats,
+          monthlyApplications: data.monthlyApplications,
+        },
+      });
     } catch (error) {
       //logout user later
       console.log(error.response);
     }
     clearAlert();
-  }
+  };
 
   const clearFilters = () => {
-    console.log('Clear filters');
-  }
+    dispatch({ type: CLEAR_FILTERS });
+  };
 
   return (
     <AppContext.Provider
@@ -322,7 +326,7 @@ const AppProvider = ({ children }) => {
         deleteJob,
         editJob,
         showStats,
-        clearFilters
+        clearFilters,
       }}
     >
       {children}
