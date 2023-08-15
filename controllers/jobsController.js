@@ -23,11 +23,11 @@ const getAllJobs = async (req, res) => {
     createdBy: req.user.userId
   }
 
-  if(status !== 'all') {
+  if(status && status !== 'all') {
     queryObject.status = status;
   }
   
-  if(jobType !== 'all') {
+  if(jobType && jobType !== 'all') {
     queryObject.jobType = jobType;
   }
 
@@ -37,16 +37,16 @@ const getAllJobs = async (req, res) => {
 
   let result = Job.find(queryObject);
 
-  if(sort === 'latest') {
+  if(sort && sort === 'latest') {
     result = result.sort('-createdAt');
   }
-  if(sort === 'oldest') {
+  if(sort && sort === 'oldest') {
     result = result.sort('createdAt');
   }
-  if(sort === 'a-z') {
+  if(sort && sort === 'a-z') {
     result = result.sort('position');
   }
-  if(sort === 'z-a') {
+  if(sort && sort === 'z-a') {
     result = result.sort('-position');
   }
 
