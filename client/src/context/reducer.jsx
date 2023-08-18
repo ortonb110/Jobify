@@ -26,7 +26,8 @@ import {
   EDIT_JOB_ERROR,
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
-  CLEAR_FILTERS
+  CLEAR_FILTERS,
+  CHANGE_PAGE
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -274,13 +275,20 @@ const reducer = (state, action) => {
       monthlyApplications: action.payload.monthlyApplications,
     };
   }
-  if(action.type ==='CLEAR_FILTERS') {
+  if(action.type ===CLEAR_FILTERS) {
     return {
       ...state,
       search: '',
       searchStatus: 'all',
       searchType: 'all',
       sort: 'latest'
+    }
+  }
+
+  if(action.type === CHANGE_PAGE) {
+    return {
+      ...state, 
+      page:action.payload.page
     }
   }
 

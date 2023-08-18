@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import Wrapper from "../assets/wrappers/JobsContainer";
 import Loading from "./Loading";
 import {Job} from '../Components/index'
-
+import PageBtnContainer from "./PageBtnContainer";
 
 const JobsContainer = () => {
-  const { getJob, jobs, isLoading, page, totalJobs, searchStatus, search, searchType, sort } = useAppContext();
+  const { getJob, jobs, isLoading, page, totalJobs, searchStatus, search, searchType, sort, numOfPages } = useAppContext();
 
   useEffect(() => {
     getJob();
@@ -36,6 +36,9 @@ const JobsContainer = () => {
             })
         }
       </div>
+      {
+        numOfPages > 1 && <PageBtnContainer/>
+      }
     </Wrapper>
   );
 };
